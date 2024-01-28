@@ -28,7 +28,6 @@
                         return res['text']().then((data) => ({ status: res.status, body: data }));
                     })
                     .catch((error) => {
-                        //console.error('Error:', error);
                         return error;
                     });
                 
