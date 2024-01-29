@@ -61,7 +61,7 @@ Resources:
     # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Type: AWS::Serverless::Function 
     Properties:
-      FunctionName: !Join ['', ['miro-terms-banner-write-user', !Join ['-', [!Ref AWS::StackName, !Select [4, !Split ['-', !Select [2, !Split ['/', !Ref AWS::StackId]]]]]]]]
+      FunctionName: !Join ['-', [!Ref AWS::StackName, !Select [4, !Split ['-', !Select [2, !Split ['/', !Ref AWS::StackId]]]]]]
       Description: !Sub 'Lambda function for the "Miro Terms Modal app". It writes data on the S3 bucket "${S3MiroBannerAccepters}/users"'
       CodeUri: getSignedURL/
       Handler: app.handler
