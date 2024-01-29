@@ -35,16 +35,14 @@
             }
 
             async function triggerModal(seconds) {
-                let modal = null;
-                modal = await miro.board.ui.openModal({
-                    url: MODAL_URL,
+                var timeStamp = Date.now();
+                await miro.board.ui.openModal({
+                    url: `${MODAL_URL}?v=${timeStamp}`,
                     width: MODAL_WITH,
                     height: MODAL_HEIGHT,
                     fullscreen: false
                 });
-                if (modal !== null) {
-                    return 'success';
-                }
+                checkModal(seconds);
             };
 
             async function getMiroTermsModalFrame() {
@@ -97,10 +95,7 @@
                       return true;
                     }
                     else {
-                      const showModal = await triggerModal();
-                      if (showModal === 'success') {
-                          init();
-                      } 
+                        triggerModal(seconds);
                     }
                 }
             }
@@ -109,17 +104,9 @@
                 if (window.userInfo === null) {
                   window.userInfo = await miro.board.getUserInfo();
                 }
-                const apiUrl = S3_BUCKET_BASE_URL + '/users/' + window.userInfo.id;
-                const query = await callApi(apiUrl,'GET',null);
-                if (query.status === 200) {
-                    console.log('Terms Modal has been accepted - Ending actions');
-                    return true;
-                }
-                else {
-                    /* Interval in seconds in which the app will check if the terms modal has been accepted */
-                    SECONDS_TO_WAIT = +SECONDS_TO_WAIT; 
-                    const startCheck = await checkModal(SECONDS_TO_WAIT);
-                }
+                /* Interval in seconds in which the app will check if the terms modal has been accepted */
+                SECONDS_TO_WAIT = +SECONDS_TO_WAIT; 
+                checkModal(SECONDS_TO_WAIT);
             }
 
             init();
