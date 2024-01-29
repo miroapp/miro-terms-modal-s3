@@ -35,13 +35,15 @@
             }
 
             async function triggerModal(seconds) {
-                var timeStamp = Date.now();
-                await miro.board.ui.openModal({
-                    url: `${MODAL_URL}?v=${timeStamp}`,
-                    width: MODAL_WITH,
-                    height: MODAL_HEIGHT,
-                    fullscreen: false
-                });
+                if (await miro.board.ui.canOpenModal()) {
+                    var timeStamp = Date.now();
+                    await miro.board.ui.openModal({
+                        url: `${MODAL_URL}?v=${timeStamp}`,
+                        width: MODAL_WITH,
+                        height: MODAL_HEIGHT,
+                        fullscreen: false
+                    });
+                }
                 checkModal(seconds);
             };
 
@@ -73,7 +75,7 @@
 
             async function checkModal(seconds) {
                 let canOpenModal = await miro.board.ui.canOpenModal();
-                if (canOpenModal === false) {
+                if (!canOpenModal) {
                     let miroModal = await getMiroTermsModalFrame();
                     if (miroModal === null) {
                         console.log(`There is another modal currently open - retrying in ${seconds} second(s)`);
