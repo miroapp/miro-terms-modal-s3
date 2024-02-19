@@ -18,6 +18,7 @@ Resources:
             - HEAD
           AllowedOrigins:
             - !Join ['', ['https://s3-', !Join ['-', [!Ref AWS::StackName, !Select [4, !Split ['-', !Select [2, !Split ['/', !Ref AWS::StackId]]]]]], '.s3.', !Ref AWS::Region, '.amazonaws.com']]
+            - !Join ['', ['https://s3-', !Join ['-', [!Ref AWS::StackName, !Select [4, !Split ['-', !Select [2, !Split ['/', !Ref AWS::StackId]]]]]], '.s3.amazonaws.com']]
       PublicAccessBlockConfiguration:
         BlockPublicAcls: false
         BlockPublicPolicy: false
