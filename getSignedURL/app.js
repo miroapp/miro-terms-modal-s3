@@ -17,7 +17,10 @@
 
 const AWS = require('aws-sdk')
 AWS.config.update({ region: process.env.AWS_REGION })
-const s3 = new AWS.S3()
+const s3 = new AWS.S3({
+  apiVersion: '2006-03-01',
+  signatureVersion: 'v4'
+});
 
 // Change this value to adjust the signed URL's expiration
 const URL_EXPIRATION_SECONDS = 300
