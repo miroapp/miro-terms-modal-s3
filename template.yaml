@@ -55,6 +55,7 @@ Resources:
           - '*'
         AllowOrigins: 
           - !Sub 'https://${S3MiroBannerAccepters}.s3.${AWS::Region}.amazonaws.com'
+          - !Sub 'https://${S3MiroBannerAccepters}.s3.amazonaws.com'
 
   ## Lambda function
   MiroBannerAcceptersRequestFunction:
